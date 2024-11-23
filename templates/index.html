@@ -5,36 +5,35 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <h1 style="text-align: center">Task Master</h1>
+<div class="content" style="text-align: center;">
+    <h1>Task Master</h1>
+
     {% if tasks|length < 1 %}
-    <h4 style="text-align: center">There are no tasks. create one below!</h4>
-
+    <h4>There are no tasks. Create one below!</h4>
     {% else %}
-
-    <table style="border-collapse: collapse; width: 80%; margin: auto; text-align: left;">
+    <table style="border-collapse: collapse; width: 80%; margin: 20px auto; text-align: left;">
         <tr>
-            <th style="border: 1px solid black; padding: 8px;">Task</th>
-            <th style="border: 1px solid black; padding: 8px;">Added</th>
-            <th style="border: 1px solid black; padding: 8px;">Actions</th>
+            <th style="border: 1px solid black; padding: 10px; background-color: #f0f0f0;">Task</th>
+            <th style="border: 1px solid black; padding: 10px; background-color: #f0f0f0;">Added</th>
+            <th style="border: 1px solid black; padding: 10px; background-color: #f0f0f0;">Actions</th>
         </tr>
         {% for task in tasks %}
-            <tr>    
-                <td style="border: 1px solid black; padding: 8px;">{{ task.content }}</td>
-                <td style="border: 1px solid black; padding: 8px;">{{ task.date_created.date()}}</td>
-                <td style="border: 1px solid black; padding: 8px;">
-                    <a href="/delete/{{task.id}}" style="color: blue; text-decoration: none;">Delete</a>
-                    <br>
-                    <a href="/update/{{task.id}}" style="color: blue; text-decoration: none;">Update</a>
-                </td>
-            </tr>
+        <tr>
+            <td style="border: 1px solid black; padding: 10px;">{{ task.content }}</td>
+            <td style="border: 1px solid black; padding: 10px;">{{ task.date_created.strftime('%Y-%m-%d') }}</td>
+            <td style="border: 1px solid black; padding: 10px;">
+                <a href="/update/{{ task.id }}" style="color: blue; text-decoration: none; margin-right: 10px;">Update</a>
+                <a href="/delete/{{ task.id }}" style="color: red; text-decoration: none;" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+            </td>
+        </tr>
         {% endfor %}
     </table>
     {% endif %}
 
-    <form action="/" method="POST">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
+    <!-- Add Task Form -->
+    <form action="/" method="POST" style="margin: 20px auto;">
+        <input type="text" name="content" id="content" placeholder="Enter your task" required style="padding: 8px; width: 300px;">
+        <input type="submit" value="Add Task" style="padding: 8px 15px; background-color: green; color: white; border: none; cursor: pointer;">
     </form>
 </div>
 {% endblock %}
